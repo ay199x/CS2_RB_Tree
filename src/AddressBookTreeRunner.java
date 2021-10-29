@@ -12,11 +12,12 @@ import addressbook.AddressBookTree; //package name addressbook... class name Add
  *
  * @author Andrew Steinberg
  */
-public class AddressBookTreeRunner {
+public class AddressBookTreeRunner
+{
     
     public static void main(String[] args) throws FileNotFoundException, IOException
     {
-        AddressBookTree test = new AddressBookTree();
+        AddressBookTree <String, String> test = new AddressBookTree<String, String>();
 
         File file=new File("faculty.txt"); 
         FileReader fr=new FileReader(file);   //reads the file  

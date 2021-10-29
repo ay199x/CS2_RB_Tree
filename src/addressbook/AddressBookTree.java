@@ -33,6 +33,7 @@ public class AddressBookTree<T extends Comparable<T>, U extends Comparable<U>>
        node.parent = null;
        node.name = name;
        node.office = office;
+       node.left = TNULL;
        node.right = TNULL;
        node.color = 1; // new node must be red
 
@@ -59,8 +60,10 @@ public class AddressBookTree<T extends Comparable<T>, U extends Comparable<U>>
        else if (node.name.compareTo(y.name.toString()) < 0)
        {
            y.left = node;
+           node.parent = y;
        } else {
            y.right = node;
+           node.parent = y;
        }
 
        // if new node is a root node, simply return
@@ -83,7 +86,7 @@ public class AddressBookTree<T extends Comparable<T>, U extends Comparable<U>>
    private void fixInsert(Node x)
    {
        Node y;
-       while(x.parent.color == 1)
+       while((x != this.root) && (x.parent.color == 1))
        {
            if(x.parent == x.parent.parent.left)
            {
@@ -134,7 +137,8 @@ public class AddressBookTree<T extends Comparable<T>, U extends Comparable<U>>
    }
 
     // rotate left at node x
-    public void leftRotate(Node x) {
+    public void leftRotate(Node x)
+    {
         Node y = x.right;
         x.right = y.left;
         if (y.left != TNULL)
@@ -226,8 +230,10 @@ public class AddressBookTree<T extends Comparable<T>, U extends Comparable<U>>
             fixDelete(x);
         }
     }
+
     // fix the rb tree modified by the delete operation
-    private void fixDelete(Node x) {
+    private void fixDelete(Node x)
+    {
         Node s;
         while (x != root && x.color == 0) {
             if (x == x.parent.left) {
@@ -294,6 +300,7 @@ public class AddressBookTree<T extends Comparable<T>, U extends Comparable<U>>
         }
         x.color = 0;
     }
+
     private void rbTransplant(Node u, Node v)
     {
         if (u.parent == null) {
@@ -307,7 +314,8 @@ public class AddressBookTree<T extends Comparable<T>, U extends Comparable<U>>
     }
 
     // find the node with the minimum key
-    public Node minimum(Node node) {
+    public Node minimum(Node node)
+    {
         while (node.left != TNULL) {
             node = node.left;
         }
